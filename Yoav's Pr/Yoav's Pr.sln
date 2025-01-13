@@ -5,11 +5,9 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yoav's Pr", "Yoav's Pr.csproj", "{46FA5AA4-F22B-4FD8-BF2E-19F270143FC6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF45EDA5-8D99-412E-BD4A-984DCDDE554D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model1", "..\Model1\Model1.csproj", "{4F933953-2FF8-4645-B8BA-A89117A37DBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model1", "..\Model1\Model1.csproj", "{4F933953-2FF8-4645-B8BA-A89117A37DBA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel1", "..\ViewModel1\ViewModel1.csproj", "{EE67D105-BF11-4989-A604-C4C675753764}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel1", "..\ViewModel1\ViewModel1.csproj", "{EE67D105-BF11-4989-A604-C4C675753764}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

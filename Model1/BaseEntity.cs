@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Model1
 {
-    public class BaseEnitity
+    public class BaseEntity
     {
         private int id;
 
-        public BaseEnitity() { }
-        public BaseEnitity(int id)
+        public BaseEntity() { }
+        public BaseEntity(int id)
         {
             this.id = id;
         }
