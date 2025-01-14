@@ -4,10 +4,12 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Model1;
 
 namespace ViewModel1
 {
-    public class UsersDB
+    public class UsersDB : BaseDB
     {
         private string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\Yoav\\source\\repos\\Meamenn\\Yoav-s-Pr\\Yoav's Pr\\App_Data\\Database1.mdf\";Integrated Security=True";
         private SqlConnection connection;
@@ -75,6 +77,16 @@ namespace ViewModel1
             return null;
         }
 
+        protected override BaseEntity CreateModel(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override BaseEntity newEntity()
+        {
+            throw new NotImplementedException();
+        }
+
         private User CreateModel()
         {
             return new User
@@ -86,19 +98,18 @@ namespace ViewModel1
                 Coins = (int)reader["coins"]
             };
         }
-    }
-    public class UsersDB : BaseDB
-    {
+
+
         public int Insert(User user)
         {
             string sqlStr = $"INSERT INTO Users (username, passcode, email, coins) " +
-                            $"VALUES ('{user.Username}', '{user.Passcode}', '{user.Email}', {user.Coins})";
+                            $"VALUES ('{user.Username}', '{user.Passcode}', '{user.Mail}', {user.Coins})";
             return SaveChanges(sqlStr);
         }
 
         public int Update(User user)
         {
-            string sqlStr = $"UPDATE Users SET username='{user.Username}', passcode='{user.Passcode}', email='{user.Email}', " +
+            string sqlStr = $"UPDATE Users SET username='{user.Username}', passcode='{user.Passcode}', email='{user.Mail}', " +
                             $"coins={user.Coins} WHERE Id={user.Id}";
             return SaveChanges(sqlStr);
         }
@@ -119,4 +130,5 @@ namespace ViewModel1
         public string Mail { get; set; }
         public int Coins { get; set; }
     }
+
 }

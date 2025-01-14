@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlTypes;
 using System.Data;
+using System.Data.SqlClient;
+using Model1;
 
 namespace ViewModel1
 {
     public abstract class BaseDB
     {
-        private string connectionString;
+        protected string connectionString;
         protected SqlConnection connection;
         protected SqlCommand command;
         protected SqlDataReader reader;

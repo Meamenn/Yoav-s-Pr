@@ -1,10 +1,11 @@
 ﻿
 using System.Data;
 using System.Text;
+using System.Data.SqlClient;
 
 namespace ViewModel1
 {
-    public class FriendshipsDB
+    public class FriendshipsDB : BaseDB
     {
         private string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\Yoav\\source\\repos\\Meamenn\\Yoav-s-Pr\\Yoav's Pr\\App_Data\\Database1.mdf\";Integrated Security=True";
         private SqlConnection connection;
@@ -72,6 +73,16 @@ namespace ViewModel1
             return null;
         }
 
+        protected override Model1.BaseEntity CreateModel(Model1.BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Model1.BaseEntity newEntity()
+        {
+            throw new NotImplementedException();
+        }
+
         private Friendship CreateModel()
         {
             return new Friendship
@@ -84,9 +95,7 @@ namespace ViewModel1
                 User2Wins = (int)reader["User2Wins"]
             };
         }
-    }
-    public class FriendshipsDB : BaseDB
-    {
+
         public int Insert(Friendship friendship)
         {
             string sqlStr = string.Format("INSERT INTO Friendships (userId1, userId2, created_at, User1Wins, User2Wins) " +

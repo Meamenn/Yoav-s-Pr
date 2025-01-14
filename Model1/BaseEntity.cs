@@ -6,22 +6,10 @@ using System.Threading.Tasks;
 
 namespace Model1
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         private int id;
-
-        public BaseEntity() { }
-        public BaseEntity(int id)
-        {
-            this.id = id;
-        }
-        public int getID()
-        {
-            return id;
-        }
-        public void setID(int id)
-        {
-            this.id = id;
-        }
+        
+        public int Id { get => id; set => id = value; }
     }
 }

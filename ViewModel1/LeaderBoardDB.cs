@@ -4,10 +4,12 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Model1;
 
 namespace ViewModel1
 {
-    public class LeaderBoardDB
+    public class LeaderBoardDB : BaseDB
     {
         private string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\Yoav\\source\\repos\\Meamenn\\Yoav-s-Pr\\Yoav's Pr\\App_Data\\Database1.mdf\";Integrated Security=True";
         private SqlConnection connection;
@@ -75,6 +77,16 @@ namespace ViewModel1
             return null;
         }
 
+        protected override BaseEntity CreateModel(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override BaseEntity newEntity()
+        {
+            throw new NotImplementedException();
+        }
+
         private LeaderBoardEntry CreateModel()
         {
             return new LeaderBoardEntry
@@ -83,9 +95,7 @@ namespace ViewModel1
                 Points = (int)reader["Points"]
             };
         }
-    }
-    public class LeaderBoardDB : BaseDB
-    {
+
         public int Insert(LeaderBoardEntry entry)
         {
             string sqlStr = $"INSERT INTO LeaderBoard (userId, score) " +
@@ -107,10 +117,11 @@ namespace ViewModel1
         }
     }
 
-
     public class LeaderBoardEntry
     {
         public int UserId { get; set; }
         public int Points { get; set; }
     }
 }
+
+

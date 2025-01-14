@@ -11,7 +11,7 @@ namespace Model1
         public FriendsList() { }
         public FriendsList(IEnumerable<Friendship> list) : base(list) { }
 
-        public FriendsList(IEnumerable<BaseEnitity> list) : base(list.Cast<Friendship>().ToList()) { }
+        public FriendsList(IEnumerable<BaseEntity> list) : base(list.Cast<Friendship>().ToList()) { }
 
     }
 }

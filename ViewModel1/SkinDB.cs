@@ -4,10 +4,12 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Model1;
 
 namespace ViewModel1
 {
-    public class SkinDB
+    public class SkinDB : BaseDB
     {
         private string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\Yoav\\source\\repos\\Meamenn\\Yoav-s-Pr\\Yoav's Pr\\App_Data\\Database1.mdf\";Integrated Security=True";
         private SqlConnection connection;
@@ -75,19 +77,12 @@ namespace ViewModel1
             return null;
         }
 
-        private Skin CreateModel()
-        {
-            return new Skin
-            {
-                Id = (int)reader["Id"],
-                SkinName = reader["SkinName"].ToString(),
-                Rarity = reader["Rarity"].ToString(),
-                Cost = (int)reader["Cost"]
-            };
-        }
-    }
-    public class SkinDB : BaseDB
-    {
+        //private override void CreateModel(BaseEntity entity)
+        //{
+        //    Skin skin = entity as Skin;
+        //    base.CreateModel(skin);
+        //}
+
         public int Insert(Skin skin)
         {
             string sqlStr = $"INSERT INTO Skins (name, price) " +
@@ -107,13 +102,24 @@ namespace ViewModel1
             string sqlStr = $"DELETE FROM Skins WHERE Id={skin.Id}";
             return SaveChanges(sqlStr);
         }
-    }
 
-    public class Skin
-    {
-        public int Id { get; set; }
-        public string SkinName { get; set; }
-        public string Rarity { get; set; }
-        public int Cost { get; set; }
+        protected override Model1.BaseEntity newEntity()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Model1.BaseEntity CreateModel(Model1.BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public class Skin
+        {
+            public int Id { get; set; }
+            public string SkinName { get; set; }
+            public string Rarity { get; set; }
+            public int Cost { get; set; }
+        }
     }
 }
+
