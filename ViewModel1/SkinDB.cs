@@ -71,7 +71,7 @@ namespace ViewModel1
             finally
             {
                 reader?.Close();
-                if (connection.State == ConnectionState.Open) connection.Close();
+                if (connection.State == ConnectionState.Open) connection.Close();d
             }
 
             return null;
