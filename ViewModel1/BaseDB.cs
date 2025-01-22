@@ -109,5 +109,18 @@ namespace ViewModel1
 
             return records;
         }
+        protected List<BaseEntity> insterted = new List<BaseEntity>();
+        protected List<BaseEntity> deleted = new List<BaseEntity>();
+        protected List<BaseEntity> update = new List<BaseEntity>();
+
+        public abstract void Insert(BaseEntity entity);
+        public abstract void Update(BaseEntity entity);
+        public abstract void Delete(BaseEntity entity);
+
+        protected abstract string CreateInsertSQL(BaseEntity entity);
+        protected abstract string CreateUpdateSQL(BaseEntity entity);
+        protected abstract string CreateDeleteSQL(BaseEntity entity);
+
+        
     }
 }
