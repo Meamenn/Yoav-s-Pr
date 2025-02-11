@@ -1,15 +1,18 @@
-﻿@page "/race"
+﻿@page "/racegame"
 @inject IJSRuntime JS
 
-<PageTitle>Race Game</PageTitle>
-
 <h3>Car Race Game</h3>
-<canvas id="raceCanvas" width="400" height="600" style="border:1px solid black;"></canvas>
-<button @onclick="StartGame">Start Game</button>
+
+<canvas id="gameCanvas" width="500" height="700" style="border: 2px solid black;background-color:darkseagreen;"></canvas>
 
 @code {
-    private async Task StartGame()
+    private bool isRunning = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JS.InvokeVoidAsync("startRace");
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("startGame");
+        }
     }
 }
