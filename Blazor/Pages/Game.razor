@@ -1,0 +1,21 @@
+﻿@page "/racegame"
+
+
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+<canvas id="gameCanvas" width="500" height="700" style="border: 2px solid black;"></canvas>
+
+@code {
+    private bool firstRender = true; // Flag to prevent multiple calls
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("startRace");
+            this.firstRender = false;
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}
