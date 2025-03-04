@@ -1,4 +1,5 @@
-﻿using Model1;
+﻿using Model;
+using System.Collections.Generic;
 
 public class User : BaseEntity
 {

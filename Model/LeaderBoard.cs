@@ -1,4 +1,4 @@
-﻿using Model1;
+﻿using Model;
 
 public class Leaderboard : BaseEntity
 {

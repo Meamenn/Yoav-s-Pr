@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using Model1;
+using Model;
 
 namespace ViewModel1
 {
@@ -77,15 +77,7 @@ namespace ViewModel1
             return null;
         }
 
-        protected override BaseEntity CreateModel(BaseEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override BaseEntity newEntity()
-        {
-            throw new NotImplementedException();
-        }
+     
 
         private LeaderBoardEntry CreateModel()
         {
@@ -114,6 +106,36 @@ namespace ViewModel1
         {
             string sqlStr = $"DELETE FROM LeaderBoard WHERE Id={entry.UserId}";
             return SaveChanges(sqlStr);
+        }
+
+        protected override BaseEntity NewEntity()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override BaseEntity PopulateEntity(SqlDataReader reader)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Insert(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Delete(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string GetTableName()
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model1
+namespace Model
 {
     public class Friendship : BaseEntity
     {
