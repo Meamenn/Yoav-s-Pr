@@ -1,126 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlTypes;
-using System.Data;
 using System.Data.SqlClient;
 using Model1;
 
-namespace ViewModel1
+namespace ViewModel1.Data
 {
     public abstract class BaseDB
     {
-        protected string connectionString;
-        protected SqlConnection connection;
-        protected SqlCommand command;
-        protected SqlDataReader reader;
+        protected readonly string ConnectionString;
+        protected SqlConnection Connection;
+        protected SqlCommand Command;
 
         protected BaseDB()
         {
-            connectionString = @"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\""C:\\Users\\Yoav\\source\\repos\\Meamenn\\Yoav-s-Pr\\Yoav's Pr\\App_Data\\Database1.mdf\"";Integrated Security=True";
-            connection = new SqlConnection(connectionString);
-            command = new SqlCommand { Connection = connection };
+            ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\Yoav\\source\\repos\\Meamenn\\Yoav-s-Pr\\Yoav's Pr\\App_Data\\Database1.mdf\";Integrated Security=True";
+            Connection = new SqlConnection(ConnectionString);
+            Command = new SqlCommand { Connection = Connection };
         }
 
-        // Abstract methods to be implemented in derived classes
-        protected abstract BaseEntity newEntity();
-        protected abstract BaseEntity CreateModel(BaseEntity entity);
+        protected abstract BaseEntity NewEntity();
+        protected abstract BaseEntity PopulateEntity(SqlDataReader reader);
 
-        // Generic SelectAll method
         public List<BaseEntity> SelectAll()
         {
-            List<BaseEntity> list = new List<BaseEntity>();
-
+            var list = new List<BaseEntity>();
             try
             {
-                command.CommandText = $"SELECT * FROM {GetType().Name.Replace("DB", "")}";
-                connection.Open();
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
+                Command.CommandText = $"SELECT * FROM {GetTableName()}";
+                Connection.Open();
+                using (var reader = Command.ExecuteReader())
                 {
-                    BaseEntity entity = newEntity();
-                    list.Add(CreateModel(entity));
+                    while (reader.Read())
+                    {
+                        var entity = NewEntity();
+                        list.Add(PopulateEntity(reader));
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-            finally
-            {
-                reader?.Close();
-                connection.Close();
-            }
-
+            catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
+            finally { Connection.Close(); }
             return list;
         }
 
-        // Generic SelectById method
         public BaseEntity SelectById(int id)
         {
-            BaseEntity entity = null;
-
             try
             {
-                command.CommandText = $"SELECT * FROM {GetType().Name.Replace("DB", "")} WHERE Id = {id}";
-                connection.Open();
-                reader = command.ExecuteReader();
-
-                if (reader.Read())
+                Command.CommandText = $"SELECT * FROM {GetTableName()} WHERE Id = @Id";
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Id", id);
+                Connection.Open();
+                using (var reader = Command.ExecuteReader())
                 {
-                    entity = newEntity();
-                    entity = CreateModel(entity);
+                    if (reader.Read())
+                    {
+                        var entity = NewEntity();
+                        return PopulateEntity(reader);
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-            finally
-            {
-                reader?.Close();
-                connection.Close();
-            }
-
-            return entity;
+            catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
+            finally { Connection.Close(); }
+            return null;
         }
-        protected int SaveChanges(string command_text)
+
+        protected int ExecuteNonQuery(string sql, Dictionary<string, object> parameters = null)
         {
             int records = 0;
-
             try
             {
-                command.CommandText = command_text;
-                connection.Open();
-                records = command.ExecuteNonQuery();
+                Command.CommandText = sql;
+                Command.Parameters.Clear();
+                if (parameters != null)
+                    foreach (var param in parameters)
+                        Command.Parameters.AddWithValue(param.Key, param.Value);
+                Connection.Open();
+                records = Command.ExecuteNonQuery();
             }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.Message + "\nSQL: " + command.CommandText);
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
-
+            catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
+            finally { Connection.Close(); }
             return records;
         }
-        protected List<BaseEntity> insterted = new List<BaseEntity>();
-        protected List<BaseEntity> deleted = new List<BaseEntity>();
-        protected List<BaseEntity> update = new List<BaseEntity>();
 
         public abstract void Insert(BaseEntity entity);
         public abstract void Update(BaseEntity entity);
         public abstract void Delete(BaseEntity entity);
 
-        protected abstract string CreateInsertSQL(BaseEntity entity);
-        protected abstract string CreateUpdateSQL(BaseEntity entity);
-        protected abstract string CreateDeleteSQL(BaseEntity entity);
-
-        
+        protected abstract string GetTableName();
     }
 }

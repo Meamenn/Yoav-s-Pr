@@ -1,134 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Model1;
 
-namespace ViewModel1
+namespace ViewModel1.Data
 {
     public class UsersDB : BaseDB
     {
-        private string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\Yoav\\source\\repos\\Meamenn\\Yoav-s-Pr\\Yoav's Pr\\App_Data\\Database1.mdf\";Integrated Security=True";
-        private SqlConnection connection;
-        private SqlCommand command;
-        private SqlDataReader reader;
+        protected override BaseEntity NewEntity() => new User();
 
-        public UsersDB()
-        {
-            connection = new SqlConnection(connectionString);
-            command = new SqlCommand();
-            command.Connection = connection;
-        }
-
-        public List<User> SelectAll()
-        {
-            List<User> usersList = new List<User>();
-
-            try
-            {
-                command.CommandText = "SELECT * FROM Users";
-                connection.Open();
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    usersList.Add(CreateModel());
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                reader?.Close();
-                if (connection.State == ConnectionState.Open) connection.Close();
-            }
-
-            return usersList;
-        }
-
-        public User SelectById(int id)
-        {
-            try
-            {
-                command.CommandText = $"SELECT * FROM Users WHERE Id = {id}";
-                connection.Open();
-                reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    return CreateModel();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                reader?.Close();
-                if (connection.State == ConnectionState.Open) connection.Close();
-            }
-
-            return null;
-        }
-
-        protected override BaseEntity CreateModel(BaseEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override BaseEntity newEntity()
-        {
-            throw new NotImplementedException();
-        }
-
-        private User CreateModel()
+        protected override BaseEntity PopulateEntity(SqlDataReader reader)
         {
             return new User
             {
                 Id = (int)reader["Id"],
-                Username = reader["username"].ToString(),
-                Passcode = reader["passcode"].ToString(),
-                Mail = reader["mail"].ToString(),
-                Coins = (int)reader["coins"]
+                Username = reader["Username"].ToString(),
+                Passcode = reader["Passcode"].ToString(),
+                Mail = reader["Mail"].ToString(),
+                Coins = (int)reader["Coins"]
             };
         }
 
-
-        public int Insert(User user)
+        public override void Insert(BaseEntity entity)
         {
-            string sqlStr = $"INSERT INTO Users (username, passcode, email, coins) " +
-                            $"VALUES ('{user.Username}', '{user.Passcode}', '{user.Mail}', {user.Coins})";
-            return SaveChanges(sqlStr);
+            var user = (User)entity;
+            string sql = "INSERT INTO Users (Username, Passcode, Mail, Coins) VALUES (@Username, @Passcode, @Mail, @Coins)";
+            var parameters = new Dictionary<string, object>
+            {
+                { "@Username", user.Username },
+                { "@Passcode", user.Passcode },
+                { "@Mail", user.Mail },
+                { "@Coins", user.Coins }
+            };
+            ExecuteNonQuery(sql, parameters);
         }
 
-        public int Update(User user)
+        public override void Update(BaseEntity entity)
         {
-            string sqlStr = $"UPDATE Users SET username='{user.Username}', passcode='{user.Passcode}', email='{user.Mail}', " +
-                            $"coins={user.Coins} WHERE Id={user.Id}";
-            return SaveChanges(sqlStr);
+            var user = (User)entity;
+            string sql = "UPDATE Users SET Username = @Username, Passcode = @Passcode, Mail = @Mail, Coins = @Coins WHERE Id = @Id";
+            var parameters = new Dictionary<string, object>
+            {
+                { "@Id", user.Id },
+                { "@Username", user.Username },
+                { "@Passcode", user.Passcode },
+                { "@Mail", user.Mail },
+                { "@Coins", user.Coins }
+            };
+            ExecuteNonQuery(sql, parameters);
         }
 
-        public int Delete(User user)
+        public override void Delete(BaseEntity entity)
         {
-            string sqlStr = $"DELETE FROM Users WHERE Id={user.Id}";
-            return SaveChanges(sqlStr);
+            var user = (User)entity;
+            string sql = "DELETE FROM Users WHERE Id = @Id";
+            ExecuteNonQuery(sql, new Dictionary<string, object> { { "@Id", user.Id } });
         }
+
+        protected override string GetTableName() => "Users";
     }
-
-
-    public class User
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Passcode { get; set; }
-        public string Mail { get; set; }
-        public int Coins { get; set; }
-    }
-
 }

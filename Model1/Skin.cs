@@ -1,29 +1,10 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model1;
 
-namespace Model1
+public class Skin : BaseEntity
 {
-    internal class Skin : BaseEntity
-    {
-        
-        private string SkinName;
-        private string Rarity;
-        private int Cost;
-        
-        public Skin() { }
+    public string SkinName { get; set; }
+    public string Rarity { get; set; }
+    public int Cost { get; set; }
 
-        public string SkinName1 { get => SkinName; set => SkinName = value; }
-        public string Rarity1 { get => Rarity; set => Rarity = value; }
-        public int Cost1 { get => Cost; set => Cost = value; }
-        //public Skin(string skinName, string rarity, int cost, int id) : base(id)
-        //{
-        //    this.SkinName = skinName;
-        //    this.Rarity = rarity;
-        //    this.Cost = cost;
-        //}
-    }
+    public Skin() { }
 }
