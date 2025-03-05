@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WpfApp;
+﻿using System.Windows;
 
-namespace WPF
+namespace WpfApp
 {
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
 
-        private void StartRace_Click(object sender, RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Race starting soon! (Implement game logic here)");
-            // Placeholder for racing logic (see Step 4)
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Hide();
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            var registerWindow = new RegisterWindow();
+            registerWindow.Show();
+            this.Hide();
+        }
+
+        private void Singleplayer_Click(object sender, RoutedEventArgs e)
+        {
+            // To be implemented later
+            MessageBox.Show("Singleplayer coming soon!");
         }
     }
 }

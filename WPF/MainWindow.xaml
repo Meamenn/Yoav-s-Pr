@@ -5,34 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="Car Racing Game" Height="450" Width="800">
+        Title="Epic Car Racing Legends" Height="600" Width="1000"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent">
     <Grid>
-        <StackPanel Margin="10">
-            <!-- User Info -->
-            <TextBlock Text="Welcome, " FontSize="20" FontWeight="Bold"/>
-            <TextBlock Text="{Binding CurrentUser.Username}" FontSize="16" Margin="0,5,0,10"/>
+        <!-- Vibrant Racing Background Gradient -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1A1A2E" Offset="0"/>
+                <GradientStop Color="#16213E" Offset="0.4"/>
+                <GradientStop Color="#0F3460" Offset="0.7"/>
+                <GradientStop Color="#E94560" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
 
-            <!-- Friends List -->
-            <TextBlock Text="Friends and Rivalries:" FontSize="16" FontWeight="Bold" Margin="0,10,0,5"/>
-            <ListView ItemsSource="{Binding Friends}" Height="200" Margin="0,0,0,10">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding UserId1}" Margin="0,0,10,0"/>
-                            <TextBlock Text="vs"/>
-                            <TextBlock Text="{Binding UserId2}" Margin="10,0,0,0"/>
-                            <TextBlock Text=" (" Margin="10,0,0,0"/>
-                            <TextBlock Text="{Binding User1Wins}"/>
-                            <TextBlock Text="-"/>
-                            <TextBlock Text="{Binding User2Wins}"/>
-                            <TextBlock Text=")"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+        <!-- Speed Lines for Epic Effect -->
+        <Canvas>
+            <Line X1="0" Y1="0" X2="1000" Y2="600" Stroke="White" StrokeThickness="1" Opacity="0.2" StrokeDashArray="5 5"/>
+            <Line X1="1000" Y1="0" X2="0" Y2="600" Stroke="White" StrokeThickness="1" Opacity="0.2" StrokeDashArray="5 5"/>
+        </Canvas>
 
-            <!-- Start Race Button (Placeholder for game logic) -->
-            <Button Content="Start Race" Click="StartRace_Click" Width="150" Height="30" HorizontalAlignment="Center"/>
+        <!-- Navbar -->
+        <StackPanel Orientation="Horizontal" Background="#16213E" Height="60" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <Button Content="Login" Style="{StaticResource EpicButtonStyle}" Click="Login_Click" Width="100" Height="40" Margin="10,10,0,10"/>
+            <Button Content="Register" Style="{StaticResource EpicButtonStyle}" Click="Register_Click" Width="100" Height="40" Margin="10"/>
+            <Button Content="Singleplayer" Style="{StaticResource EpicButtonStyle}" Click="Singleplayer_Click" Width="120" Height="40" Margin="10" IsEnabled="False"/>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <!-- Title -->
+            <TextBlock Text="Epic Car Racing Legends" Style="{StaticResource MythicTextStyle}" TextAlignment="Center" Margin="0,0,0,20"/>
+
+            <!-- Tagline -->
+            <TextBlock Text="Race to Mythic Glory!" Foreground="White" FontSize="24" FontFamily="Arial" TextAlignment="Center" Margin="0,0,0,40"/>
+
+            <!-- Placeholder for Future Content -->
+            <TextBlock Text="Prepare for an epic journey!" Foreground="#E94560" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Window>

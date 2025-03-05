@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using Model;
 
-namespace ViewModel1
+namespace ViewModel1.Data
 {
     public class UsersDB : BaseDB
     {
@@ -58,5 +58,31 @@ namespace ViewModel1
         }
 
         protected override string GetTableName() => "Users";
+        public User SelectByUsername(string username)
+        {
+            try
+            {
+                Command.CommandText = "SELECT * FROM Users WHERE Username = @Username";
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Username", username);
+                Connection.Open();
+                using (var reader = Command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return (User)PopulateEntity(reader);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return null;
+        }
     }
 }
