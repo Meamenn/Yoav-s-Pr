@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using Model;
 
-namespace ViewModel1
+namespace ViewModel1.Data
 {
     public class UsersDB : BaseDB
     {
