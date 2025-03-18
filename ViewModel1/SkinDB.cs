@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Model;
 
-namespace ViewModel1
+namespace ViewModel1.Data
 {
     public class SkinDB : BaseDB
     {
@@ -103,12 +103,42 @@ namespace ViewModel1
             return SaveChanges(sqlStr);
         }
 
-        protected override Model1.BaseEntity newEntity()
+        protected override Model.BaseEntity newEntity()
         {
             throw new NotImplementedException();
         }
 
-        protected override Model1.BaseEntity CreateModel(Model1.BaseEntity entity)
+        protected override Model.BaseEntity CreateModel(Model.BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override BaseEntity NewEntity()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override BaseEntity PopulateEntity(SqlDataReader reader)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Insert(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Delete(BaseEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string GetTableName()
         {
             throw new NotImplementedException();
         }

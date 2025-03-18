@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="App_Data\Database1.mdf" />
+    <None Remove="App_Data\Database1_log.ldf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="App_Data\Database1.mdf" />
+    <Content Include="App_Data\Database1_log.ldf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Radzen.Blazor" Version="5.9.8" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
